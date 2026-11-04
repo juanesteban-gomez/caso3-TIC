@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class ControladorAlmacenamiento {
     float almacenamiento;
-    ArrayList<Bloque> bloquesLibres;
+    ArrayList<Bloque> bloquesLibres = new ArrayList<>();
     ArrayList<Bloque> bloquesAsignados;
     int cantBloques;
     float tamBloque;

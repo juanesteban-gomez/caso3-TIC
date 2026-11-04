@@ -61,7 +61,7 @@ public class Principal {
             usuario.start();
         }
         for (int i=0; i<ng;i++){
-            GestorSolicitudes gestor = new GestorSolicitudes(buzon, zonaEspera);
+            GestorSolicitudes gestor = new GestorSolicitudes(buzon, zonaEspera, ctrlProc, ctrlMem, ctrlAlm);
             gestor.start();
         }
     }

@@ -20,7 +20,7 @@ public class Usuario extends Thread{
     public void run(){
         while (nSolicitudes > 0) {
             if (buzon.getCapacidad()>0) {
-                Solicitud solicitud = crearSolicitud(String.format("%i_Solicitud_%d", id, nSolicitudes));
+                Solicitud solicitud = crearSolicitud(String.format("%d_Solicitud_%d", id, nSolicitudes));
                 Boolean pudo = buzon.generarSolicitud(solicitud);
                 if (pudo) {
                     nSolicitudes--;
