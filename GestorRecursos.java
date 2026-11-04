@@ -39,4 +39,20 @@ public GestorRecursos(ControladorProcesadores controladorProcesadores, Controlad
         }
     }
 
+    public synchronized void liberarRecursos (Solicitud solicitud) {
+        this.controladorProcesadores.liberarProcesadores(solicitud.nProcesadores);
+        this.controladorMemoria.liberarMemoria(solicitud.memoria);
+        this.controladorDisco.liberarAlmacenamiento(solicitud.espacioDisco);
+    }
+
+    public void liberarProcesadores(int n) {
+        this.controladorProcesadores.liberarProcesadores(n);
+    }
+    public void liberarMemoria(float memoria) {
+        this.controladorMemoria.liberarMemoria(memoria);
+    }
+    public void liberarAlmacenamiento(float espacioDisco) {
+        this.controladorDisco.liberarAlmacenamiento(espacioDisco);
+    }
+
 }

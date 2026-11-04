@@ -21,14 +21,19 @@ public class GestorSolicitudes extends Thread {
         while (buzon.getUsuariosActivos() > 0) {
             Solicitud solicitud = buzon.consumirSolicitud();
             if (solicitud!=null) {
-                
-            }
+                MV mv = new MV();
+                mv.setSolicitud(solicitud);
+                mv.setBuzon(this.buzon);
+                mv.setZonaEspera(this.zonaEspera);
+                mv.start();
+            } else {
             try {
                 wait();
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
         }
     }
 }

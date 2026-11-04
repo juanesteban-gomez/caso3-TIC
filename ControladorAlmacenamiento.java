@@ -40,5 +40,13 @@ public class ControladorAlmacenamiento {
             return false;
         }
     }
-    
+    public void liberarAlmacenamiento(float espacioDisco) {
+        int bloquesNecesarios = calcularCantidadBloques(espacioDisco, this.tamBloque);
+        for (int i = 0; i < bloquesNecesarios; i++) {
+            if (!bloquesAsignados.isEmpty()) {
+                Bloque bloque = bloquesAsignados.remove(0);
+                bloquesLibres.add(bloque);
+            }
+        }
+    }
 }
