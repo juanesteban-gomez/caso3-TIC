@@ -49,7 +49,7 @@ public class Principal {
         }
 
         // Aqui pasamos los valores leidos a los constructores de los monitores
-        Buzon buzon = new Buzon(tam1);
+        Buzon buzon = new Buzon(tam1, nu);
         ZonaEspera zonaEspera = new ZonaEspera(tam2);
         ControladorProcesadores ctrlProc = new ControladorProcesadores(nProcesadores);
         ControladorMemoria ctrlMem = new ControladorMemoria(memoria, tamPagina);
@@ -57,7 +57,7 @@ public class Principal {
         
         // Creamos y lanzamos los diferentes hilos 
         for (int i=0; i<nu;i++){
-            Usuario usuario = new Usuario(i, base);
+            Usuario usuario = new Usuario(i, base, buzon);
             usuario.start();
         }
         for (int i=0; i<ng;i++){

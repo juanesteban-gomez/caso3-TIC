@@ -3,6 +3,15 @@ public class GestorSolicitudes extends Thread {
     ZonaEspera zonaEspera;
     public GestorSolicitudes( Buzon buzon, ZonaEspera zonaEspera) {
         this.buzon = buzon;
-        this.zonaEspera = zonaEspera;
+    }
+
+    @Override 
+    public void run(){
+        while (buzon.getUsuariosActivos() > 0) {
+            Solicitud solicitud = buzon.consumirSolicitud();
+            if (solicitud!=null) {
+                
+            }
+        }
     }
 }
