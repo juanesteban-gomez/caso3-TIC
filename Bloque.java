@@ -1,8 +1,14 @@
 public class Bloque {
-    int capacidad;
+    float capacidad;
     int id;
-    public Bloque(int capacidad, int id) {
+    public Bloque(float capacidad, int id) {
         this.capacidad = capacidad;
         this.id = id;
+    }
+    public float getCapacidad() {
+        return capacidad;
+    }
+    public int getId() {
+        return id;
     }
 }

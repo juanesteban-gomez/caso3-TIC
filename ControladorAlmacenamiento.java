@@ -4,14 +4,16 @@ public class ControladorAlmacenamiento {
     ArrayList<Bloque> bloquesLibres;
     ArrayList<Bloque> bloquesAsignados;
     int cantBloques;
+    float tamBloque;
 
     public ControladorAlmacenamiento(float almacenamiento, float tamBloque) {
         this.almacenamiento = almacenamiento;
+        this.tamBloque = tamBloque;
         this.cantBloques = calcularCantidadBloques(almacenamiento, tamBloque);
         this.bloquesAsignados = new ArrayList<>();
         // Inicializar los bloques libres
         for (int i = 0; i < this.cantBloques; i++) {
-            this.bloquesLibres.add(new Bloque((int) tamBloque, i));
+            this.bloquesLibres.add(new Bloque((float) tamBloque, i));
         }
     }
     public int calcularCantidadBloques(float almacenamiento, float tamBloque) {
@@ -23,4 +25,20 @@ public class ControladorAlmacenamiento {
         // Calculamos la cantidad de bloques
         return (int) (almacenamientoKiB / tamBloque);
     }
+    public int getAlmacenamientoLibre() {
+        return bloquesLibres.size();
+    }
+    public boolean asignarAlmacenamiento (float espacioDisco) {
+        int bloquesNecesarios = calcularCantidadBloques(espacioDisco, this.tamBloque);
+        if (bloquesNecesarios <= bloquesLibres.size()) {
+            for (int i = 0; i < bloquesNecesarios; i++) {
+                Bloque bloque = bloquesLibres.remove(0);
+                bloquesAsignados.add(bloque);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
