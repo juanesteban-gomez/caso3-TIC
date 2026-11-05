@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -54,15 +56,41 @@ public class Main {
         ControladorProcesadores ctrlProc = new ControladorProcesadores(nProcesadores);
         ControladorMemoria ctrlMem = new ControladorMemoria(memoria, tamPagina);
         ControladorAlmacenamiento ctrlAlm = new ControladorAlmacenamiento(almacenamiento, tamBloque);
+        GestorRecursos gestorRecursos = new GestorRecursos(ctrlProc, ctrlMem, ctrlAlm);
         
-        // Creamos y lanzamos los diferentes hilos 
+        List<Usuario> usuarios = new ArrayList<>();
         for (int i=0; i<nu;i++){
             Usuario usuario = new Usuario(i, base*i, buzon);
+            usuarios.add(usuario);
             usuario.start();
         }
+
+        List<GestorSolicitudes> gestores = new ArrayList<>();
         for (int i=0; i<ng;i++){
-            GestorSolicitudes gestor = new GestorSolicitudes(buzon, zonaEspera, ctrlProc, ctrlMem, ctrlAlm);
+            GestorSolicitudes gestor = new GestorSolicitudes(buzon, zonaEspera, gestorRecursos);
+            gestores.add(gestor);
             gestor.start();
         }
+
+        try {
+            for (Usuario usuario : usuarios) {
+                usuario.join();
+            }
+
+            for (GestorSolicitudes gestor : gestores) {
+                gestor.join();
+            }
+
+            for (GestorSolicitudes gestor : gestores) {
+                for (MV mv : gestor.getMaquinasVirtuales()) {
+                    mv.join();
+                }
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("El hilo principal fue interrumpido.");
+        }
+
+        System.out.println("Simulación terminada.");
     }
 }

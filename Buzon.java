@@ -10,11 +10,8 @@ public class Buzon {
         this.usuariosActivos = nUsuarios;
     }
 
-    public boolean termino(){
-        if (solicitudes.isEmpty()) {
-            return true;
-        }
-        return false;
+    public synchronized boolean termino(){
+        return usuariosActivos == 0 && solicitudes.isEmpty();
     }
 
     public int getCapacidad() {

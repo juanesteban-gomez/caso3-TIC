@@ -1,7 +1,7 @@
 public class GestorRecursos {
-private ControladorProcesadores controladorProcesadores;
-private ControladorMemoria controladorMemoria;
-private ControladorAlmacenamiento controladorDisco;
+private final ControladorProcesadores controladorProcesadores;
+private final ControladorMemoria controladorMemoria;
+private final ControladorAlmacenamiento controladorDisco;
 
 public GestorRecursos(ControladorProcesadores controladorProcesadores, ControladorMemoria controladorMemoria, ControladorAlmacenamiento controladorDisco) {
     this.controladorProcesadores = controladorProcesadores;

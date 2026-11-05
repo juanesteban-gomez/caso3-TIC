@@ -1,15 +1,15 @@
 import java.util.Random;
 
 public class MV extends Thread {
-    private Buzon buzon;
-    private ZonaEspera zonaEspera;
-    private Solicitud solicitud;
-    private GestorRecursos gestorRecursos;
+    private final Buzon buzon;
+    private final ZonaEspera zonaEspera;
+    private final Solicitud solicitud;
+    private final GestorRecursos gestorRecursos;
     
-    public MV(Buzon buzon2, ZonaEspera zonaEspera2, ControladorProcesadores gestorProcesador, ControladorMemoria gestorMemoria, ControladorAlmacenamiento gestorAlmacenamiento, Solicitud solicitud) {
+    public MV(Buzon buzon2, ZonaEspera zonaEspera2, GestorRecursos gestorRecursos, Solicitud solicitud) {
         this.buzon = buzon2;
         this.zonaEspera = zonaEspera2;
-        this.gestorRecursos = new GestorRecursos(gestorProcesador, gestorMemoria, gestorAlmacenamiento);
+        this.gestorRecursos = gestorRecursos;
         this.solicitud = solicitud;
     }
 
