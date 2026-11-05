@@ -26,7 +26,7 @@ public class ZonaEspera {
         cantEspera++;
     }
 
-    public void salir(){
+    public synchronized void salir(){
         cantEspera--;
         if (cantEspera == 0){
             notifyAll();
