@@ -44,13 +44,13 @@ public GestorRecursos(ControladorProcesadores controladorProcesadores, Controlad
         notifyAll();
     }
 
-    public void liberarProcesadores(int n) {
+    public synchronized void liberarProcesadores(int n) {
         this.controladorProcesadores.liberarProcesadores(n);
     }
-    public void liberarMemoria(float memoria) {
+    public synchronized void liberarMemoria(float memoria) {
         this.controladorMemoria.liberarMemoria(memoria);
     }
-    public void liberarAlmacenamiento(float espacioDisco) {
+    public synchronized void liberarAlmacenamiento(float espacioDisco) {
         this.controladorDisco.liberarAlmacenamiento(espacioDisco);
     }
 

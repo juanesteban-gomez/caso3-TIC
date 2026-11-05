@@ -7,11 +7,11 @@ public class ZonaEspera {
         this.cantEspera = 0;
     }
 
-    public float getCantEspera() {
+    public synchronized int getCantEspera() {
         return cantEspera;
     }
 
-    public float getUmbral() {
+    public int getUmbral() {
         return umbral;
     }
 

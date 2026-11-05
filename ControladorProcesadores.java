@@ -27,7 +27,7 @@ public class ControladorProcesadores {
             }
         }
     }
-     public void liberarProcesadores(int n) {
+    public void liberarProcesadores(int n) {
         for (int i = 0; i < n; i++) {
             if (!procesadoresAsignados.isEmpty()) {
                 Procesador p = procesadoresAsignados.remove(0);

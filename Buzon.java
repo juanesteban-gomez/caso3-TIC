@@ -14,7 +14,7 @@ public class Buzon {
         return usuariosActivos == 0 && solicitudes.isEmpty();
     }
 
-    public int getCapacidad() {
+    public synchronized int getCapacidad() {
         return capacidad;
     }
 

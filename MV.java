@@ -21,11 +21,11 @@ public class MV extends Thread {
         long sleepTime = 4000 + (long)(r.nextInt(36001));
         try {
             sleep(0); //Cambiar por sleepTime cuando funcione
-            System.out.println("Realizado");
             gestorRecursos.liberarRecursos(solicitud);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("Realizado");
     }
 
     public Solicitud getSolicitud() {

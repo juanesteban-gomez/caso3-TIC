@@ -59,8 +59,11 @@ public class Main {
         GestorRecursos gestorRecursos = new GestorRecursos(ctrlProc, ctrlMem, ctrlAlm);
         
         List<Usuario> usuarios = new ArrayList<>();
-        for (int i=0; i<nu;i++){
-            Usuario usuario = new Usuario(i, base*i, buzon);
+        int maxProc = Math.round(0.75f * nProcesadores);
+        int maxMem = Math.round(0.75f * memoria);
+        int maxDisco = Math.round(0.75f * almacenamiento);
+        for (int i=1; i<=nu;i++){
+            Usuario usuario = new Usuario(i, base*i, buzon, maxProc, maxMem, maxDisco);
             usuarios.add(usuario);
             usuario.start();
         }
@@ -92,5 +95,10 @@ public class Main {
         }
 
         System.out.println("Simulación terminada.");
+        System.out.println("Buzón vacío y usuarios terminados: " + buzon.termino());
+        System.out.println("Zona de espera vacía: " + (zonaEspera.getCantEspera() == 0));
+        System.out.println("Procesadores libres: " + ctrlProc.getProcesadoresLibres() + "/" + nProcesadores);
+        System.out.println("Páginas libres: " + ctrlMem.getMemoriaLibre() + "/" );
+        System.out.println("Bloques libres: " + ctrlAlm.getAlmacenamientoLibre() + "/");
     }
 }
