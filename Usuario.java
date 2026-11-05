@@ -19,20 +19,9 @@ public class Usuario extends Thread{
     @Override 
     public void run(){
         while (nSolicitudes > 0) {
-            if (buzon.getCapacidad()>0) {
                 Solicitud solicitud = crearSolicitud(String.format("%d_Solicitud_%d", id, nSolicitudes));
-                Boolean pudo = buzon.generarSolicitud(solicitud);
-                if (pudo) {
-                    nSolicitudes--;
-                }
-            } else {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                buzon.generarSolicitud(solicitud);
             }
-        }
         buzon.disminuirUsuariosActivos();
     }
 }
