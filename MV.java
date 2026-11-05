@@ -15,16 +15,14 @@ public class MV extends Thread {
 
     @Override 
     public void run() {
-        while (!gestorRecursos.reservarRecursos(solicitud)) {
-            Thread.yield();
-        }
+        gestorRecursos.reservarRecursos(solicitud);
+        zonaEspera.salir();
         Random r = new Random();
         long sleepTime = 4000 + (long)(r.nextInt(36001));
         try {
             sleep(0); //Cambiar por sleepTime cuando funcione
             System.out.println("Realizado");
             gestorRecursos.liberarRecursos(solicitud);
-            zonaEspera.salir();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

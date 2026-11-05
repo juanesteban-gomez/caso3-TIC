@@ -16,16 +16,17 @@ public class GestorSolicitudes extends Thread {
     @Override
     public void run(){
         while (!buzon.termino() ) {
-                Solicitud solicitud = buzon.consumirSolicitud();
-                if (solicitud == null){
-                    Thread.yield();
-                }
-                else{
-                    zonaEspera.entrar();
-                    MV mv = new MV(buzon, zonaEspera, gestorRecursos, solicitud);
-                    maquinasVirtuales.add(mv);
-                    mv.start();
-                }
+            zonaEspera.entrar();
+            Solicitud solicitud = buzon.consumirSolicitud();
+            if (solicitud == null){
+                zonaEspera.salir();
+                Thread.yield();
+            }
+            else{
+                MV mv = new MV(buzon, zonaEspera, gestorRecursos, solicitud);
+                maquinasVirtuales.add(mv);
+                mv.start();
+            }
         }
     }
 

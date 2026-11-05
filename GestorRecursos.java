@@ -9,28 +9,31 @@ public GestorRecursos(ControladorProcesadores controladorProcesadores, Controlad
     this.controladorDisco = controladorDisco;
 }
 
-    public synchronized boolean reservarRecursos (Solicitud solicitud) {
-        if (this.controladorProcesadores.getProcesadoresLibres() >= solicitud.nProcesadores) {
-            this.controladorProcesadores.asignarProcesadores(solicitud.nProcesadores);
-
-            if ( this.controladorMemoria.getMemoriaLibre() >= solicitud.memoria){
-                this.controladorMemoria.asignarMemoria(solicitud.memoria);
-
-                if (this.controladorDisco.getAlmacenamientoLibre() >= solicitud.espacioDisco) {
-                    this.controladorDisco.asignarAlmacenamiento(solicitud.espacioDisco);
-                    return true;
+    public synchronized void reservarRecursos (Solicitud solicitud) {
+        Boolean asigno = false;
+        while (!asigno) {
+            if (this.controladorProcesadores.getProcesadoresLibres() >= solicitud.nProcesadores) {
+                this.controladorProcesadores.asignarProcesadores(solicitud.nProcesadores);
+                if (this.controladorMemoria.getMemoriaLibre() >= solicitud.memoria){
+                    this.controladorMemoria.asignarMemoria(solicitud.memoria);
+                    if (this.controladorDisco.getAlmacenamientoLibre() >= solicitud.espacioDisco) {
+                        this.controladorDisco.asignarAlmacenamiento(solicitud.espacioDisco);
+                        asigno = true;
+                    } else {
+                        this.controladorProcesadores.liberarProcesadores(solicitud.nProcesadores);
+                        this.controladorMemoria.liberarMemoria(solicitud.memoria);
+                    }
                 } else {
                     this.controladorProcesadores.liberarProcesadores(solicitud.nProcesadores);
-                    this.controladorMemoria.liberarMemoria(solicitud.memoria);
-                    return false;
                 }
-
-            } else {
-                this.controladorProcesadores.liberarProcesadores(solicitud.nProcesadores);
-                return false;
             }
-        } else {
-            return false;
+            if (!asigno) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -38,6 +41,7 @@ public GestorRecursos(ControladorProcesadores controladorProcesadores, Controlad
         this.controladorProcesadores.liberarProcesadores(solicitud.nProcesadores);
         this.controladorMemoria.liberarMemoria(solicitud.memoria);
         this.controladorDisco.liberarAlmacenamiento(solicitud.espacioDisco);
+        notifyAll();
     }
 
     public void liberarProcesadores(int n) {
