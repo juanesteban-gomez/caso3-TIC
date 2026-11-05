@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Principal {
+public class Main {
 
     public static void main(String[] args) {
         
@@ -57,7 +57,7 @@ public class Principal {
         
         // Creamos y lanzamos los diferentes hilos 
         for (int i=0; i<nu;i++){
-            Usuario usuario = new Usuario(i, base, buzon);
+            Usuario usuario = new Usuario(i, base*i, buzon);
             usuario.start();
         }
         for (int i=0; i<ng;i++){

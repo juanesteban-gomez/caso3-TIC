@@ -10,6 +10,13 @@ public class Buzon {
         this.usuariosActivos = nUsuarios;
     }
 
+    public boolean termino(){
+        if (solicitudes.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     public int getCapacidad() {
         return capacidad;
     }

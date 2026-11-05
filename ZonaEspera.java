@@ -1,10 +1,18 @@
 public class ZonaEspera {
-    float umbral;
-    float cantEspera;
+    int umbral;
+    int cantEspera;
 
-    public ZonaEspera(float umbral) {
+    public ZonaEspera(int umbral) {
         this.umbral = umbral;
         this.cantEspera = 0;
+    }
+
+    public float getCantEspera() {
+        return cantEspera;
+    }
+
+    public float getUmbral() {
+        return umbral;
     }
 
     public synchronized void entrar() {
