@@ -21,6 +21,7 @@ public class Usuario extends Thread{
         while (nSolicitudes > 0) {
                 Solicitud solicitud = crearSolicitud(String.format("%d_Solicitud_%d", id, nSolicitudes));
                 buzon.generarSolicitud(solicitud);
+                nSolicitudes--;
             }
         buzon.disminuirUsuariosActivos();
     }
