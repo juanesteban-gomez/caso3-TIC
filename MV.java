@@ -20,7 +20,7 @@ public class MV extends Thread {
         Random r = new Random();
         long sleepTime = 4000 + (long)(r.nextInt(36001));
         try {
-            sleep(0); //Cambiar por sleepTime cuando funcione
+            sleep(sleepTime);
             gestorRecursos.liberarRecursos(solicitud);
         } catch (InterruptedException e) {
             e.printStackTrace();

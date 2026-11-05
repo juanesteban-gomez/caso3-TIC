@@ -53,9 +53,9 @@ public class Main {
         // Aqui pasamos los valores leidos a los constructores de los monitores
         Buzon buzon = new Buzon(tam1, nu);
         ZonaEspera zonaEspera = new ZonaEspera(tam2);
-        ControladorProcesadores ctrlProc = new ControladorProcesadores(nProcesadores);
-        ControladorMemoria ctrlMem = new ControladorMemoria(memoria, tamPagina);
-        ControladorAlmacenamiento ctrlAlm = new ControladorAlmacenamiento(almacenamiento, tamBloque);
+        ControladorRecursos ctrlProc = new ControladorRecursos(nProcesadores, 1);
+        ControladorRecursos ctrlMem  = new ControladorRecursos((int) Math.round(memoria * 1024.0 * 1024.0 / tamPagina), tamPagina);
+        ControladorRecursos ctrlAlm  = new ControladorRecursos((int) Math.round(almacenamiento * 1024.0 * 1024.0 / tamBloque), tamBloque);
         GestorRecursos gestorRecursos = new GestorRecursos(ctrlProc, ctrlMem, ctrlAlm);
         
         List<Usuario> usuarios = new ArrayList<>();
@@ -95,10 +95,13 @@ public class Main {
         }
 
         System.out.println("Simulación terminada.");
+        int creadas = 0;
+        for (GestorSolicitudes g : gestores) creadas += g.getMaquinasVirtuales().size();
+        System.out.println("MVs creadas: " + creadas);
         System.out.println("Buzón vacío y usuarios terminados: " + buzon.termino());
         System.out.println("Zona de espera vacía: " + (zonaEspera.getCantEspera() == 0));
-        System.out.println("Procesadores libres: " + ctrlProc.getProcesadoresLibres() + "/" + nProcesadores);
-        System.out.println("Páginas libres: " + ctrlMem.getMemoriaLibre() + "/" );
-        System.out.println("Bloques libres: " + ctrlAlm.getAlmacenamientoLibre() + "/");
+        System.out.println("Procesadores libres: " + ctrlProc.getLibres() + "/" + ctrlProc.getTotal());
+        System.out.println("Páginas libres: " + ctrlMem.getLibres() + "/" + ctrlMem.getTotal());
+        System.out.println("Bloques libres: " + ctrlAlm.getLibres() + "/" + ctrlAlm.getTotal());
     }
 }
