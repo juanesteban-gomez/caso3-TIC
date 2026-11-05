@@ -18,25 +18,28 @@ public class Buzon {
         this.usuariosActivos--;
     }
 
-    public int getUsuariosActivos() {
+    public synchronized int getUsuariosActivos() {
         return usuariosActivos;
     }
 
-    public synchronized boolean generarSolicitud (Solicitud solicitud){
-        if (this.capacidad > 0) {
-            solicitudes.offer(solicitud);
-            this.capacidad--;
-            return true;
+    public synchronized void generarSolicitud (Solicitud solicitud){
+        while (this.capacidad == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        else {
-            return false;
-        }
+        solicitudes.offer(solicitud);
+        this.capacidad--;
     }
 
     public synchronized Solicitud consumirSolicitud (){
-        while (solicitudes.isEmpty()) {
-            Thread.yield();
+        Solicitud solicitud = solicitudes.poll();
+        if (solicitud != null){
+            capacidad++;
+            notify();
         }
-        return solicitudes.poll();
+        return solicitud;
     }
 }
