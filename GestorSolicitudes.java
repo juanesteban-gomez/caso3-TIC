@@ -12,32 +12,17 @@ public class GestorSolicitudes extends Thread {
         this.gestorAlmacenamiento = gestorAlmacenamiento;
     }
 
-    public boolean crearVM (){
-        if (zonaEspera.cantEspera < zonaEspera.umbral) {
-            MV mv = new MV(buzon, zonaEspera, gestorProcesador, gestorMemoria, gestorAlmacenamiento);
-            mv.start();
-            return true;
-        }
-        return false;
-    }
-
     @Override 
     public void run(){
         while (buzon.getUsuariosActivos() > 0) {
             Solicitud solicitud = buzon.consumirSolicitud();
-            if (solicitud!=null) {
-                MV mv = new MV(buzon, zonaEspera, gestorProcesador, gestorMemoria, gestorAlmacenamiento);
+            if (solicitud!=null && zonaEspera.cantEspera < zonaEspera.umbral) {
+                MV mv = new MV(buzon, zonaEspera, gestorProcesador, gestorMemoria, gestorAlmacenamiento, solicitud);
                 mv.setSolicitud(solicitud);
                 mv.setBuzon(this.buzon);
                 mv.setZonaEspera(this.zonaEspera);
                 mv.start();
-            } else {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
         }
-    }
 }

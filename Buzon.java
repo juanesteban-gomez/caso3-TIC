@@ -34,11 +34,9 @@ public class Buzon {
     }
 
     public synchronized Solicitud consumirSolicitud (){
-        if (!solicitudes.isEmpty()) {
-            return solicitudes.poll();
+        while (solicitudes.isEmpty()) {
+            Thread.yield();
         }
-        else{
-            return null;
-        }
+        return solicitudes.poll();
     }
 }

@@ -1,9 +1,4 @@
 public class GestorRecursos {
-
-
-    //deberian ir static????
-
-
 private ControladorProcesadores controladorProcesadores;
 private ControladorMemoria controladorMemoria;
 private ControladorAlmacenamiento controladorDisco;

@@ -6,26 +6,24 @@ public class MV extends Thread {
     private Solicitud solicitud;
     private GestorRecursos gestorRecursos;
     
-    public MV(Buzon buzon2, ZonaEspera zonaEspera2, ControladorProcesadores gestorProcesador, ControladorMemoria gestorMemoria, ControladorAlmacenamiento gestorAlmacenamiento) {
+    public MV(Buzon buzon2, ZonaEspera zonaEspera2, ControladorProcesadores gestorProcesador, ControladorMemoria gestorMemoria, ControladorAlmacenamiento gestorAlmacenamiento, Solicitud solicitud) {
         this.buzon = buzon2;
         this.zonaEspera = zonaEspera2;
         this.gestorRecursos = new GestorRecursos(gestorProcesador, gestorMemoria, gestorAlmacenamiento);
+        this.solicitud = solicitud;
     }
 
     @Override 
     public void run() {
         while (!gestorRecursos.reservarRecursos(solicitud)) {
-        zonaEspera.entrar(this);
-        try {
-            wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            zonaEspera.entrar();
         }
-        } 
     Random r = new Random();
     long sleepTime = 4000 + (long)(r.nextInt(36001));
     try {
         sleep(sleepTime);
+        gestorRecursos.liberarRecursos(solicitud);
+        zonaEspera.salir();
     } catch (InterruptedException e) {
         e.printStackTrace();
     }
